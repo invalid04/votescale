@@ -1,5 +1,6 @@
 import { Icons } from "@/components/Icons";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
+import TopicCreator from "@/components/TopicCreator";
 
 export default function Home() {
   return (
@@ -25,6 +26,8 @@ export default function Home() {
               </span>{" "}
                about...
             </h1>
+
+            <TopicCreator />
           </div>
         </div>
       </MaxWidthWrapper>
