@@ -11,7 +11,7 @@ const TopicCreator = () => {
     const [input, setInput] = useState<string>('')
 
     const {mutate, error, isPending} = useMutation({
-       mutationFn: createTopic
+       mutationFn: createTopic,
     })
 
     return (
@@ -23,10 +23,15 @@ const TopicCreator = () => {
                     className='bg-white min-w-64' 
                     placeholder='Enter topic...' 
                 />
-                <Button>
+                <Button
+                    disabled={isPending}
+                    onClick={() => mutate({ topicName: input })}
+                >
                     Create
                 </Button>
             </div>
+
+            {error ? <p className='text-sm text-red-600'>{error.message}</p>: null}
         </div>
     )
 }
