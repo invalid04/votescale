@@ -1,7 +1,11 @@
-
+import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 
 export default function Home() {
   return (
-    <p>Creation</p>
+    <section className='min-h-screen bg-grid-zinc-50'>
+      <MaxWidthWrapper>
+
+      </MaxWidthWrapper>
+    </section>
   );
 }
