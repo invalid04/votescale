@@ -7,6 +7,7 @@ import { Input } from "./ui/input"
 const TopicCreator = () => {
 
     const [input, setInput] = useState<string>('')
+    
 
     return (
         <div className='mt-12 flex flex-col gap-2'>
