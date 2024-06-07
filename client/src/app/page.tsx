@@ -1,6 +1,7 @@
 import { Icons } from "@/components/Icons";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import TopicCreator from "@/components/TopicCreator";
+import { Star } from "lucide-react";
 
 export default function Home() {
   return (
@@ -28,6 +29,26 @@ export default function Home() {
             </h1>
 
             <TopicCreator />
+
+            <div className='mt-12 flex flex-col sm:flex-row items-center sm:items-start gap-5'>
+              <div className='flex flex-col gap-1 justify-between items-center sm:items-start'>
+                <div className='flex gap-0.5'>
+                  <Star className='h-4 w-4 text-green-600 fill-green-600' />
+                  <Star className='h-4 w-4 text-green-600 fill-green-600' />
+                  <Star className='h-4 w-4 text-green-600 fill-green-600' />
+                  <Star className='h-4 w-4 text-green-600 fill-green-600' />
+                  <Star className='h-4 w-4 text-green-600 fill-green-600' />
+                </div>
+
+                <p>
+                  <span className='font-semibol'>
+                    10
+                  </span>{" "}
+                  served requests
+                </p>
+              </div>
+            </div>
+
           </div>
         </div>
       </MaxWidthWrapper>
