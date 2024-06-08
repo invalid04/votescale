@@ -31,9 +31,34 @@ const ClientPage = ({topicName, initialData}: ClientPageProps) => {
 
     useEffect(() => {
         socket.on('room-update', (message: string) => {
-            console.log('room-update received:', message)
+            const data = JSON.parse(message) as {
+                text: string
+                value: number
+            }[]
+
+            data.map((newWord) => {
+                const isWordAlreadyIncluded = words.some((word) => word.text === newWord.text)
+
+                if(isWordAlreadyIncluded) {
+                    setWords((prev) => {
+                        const before = prev.find((word) => word.text === newWord.text)
+                        const rest = prev.filter((word) => word.text !== newWord.text)
+
+                        return [
+                            ...rest, 
+                            {text: before!.text, value: before!.value + newWord.value },
+                        ]
+                    })
+                } else if(words.length < 50) {
+                    setWords((prev) => [...prev, newWord])
+                }
+            })
         })
-    }, [])
+
+        return () => {
+            socket.off('room-update')
+        }
+    }, [words])
 
     const fontScale = scaleLog({
         domain: [
