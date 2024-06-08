@@ -20,6 +20,14 @@ const io = new Server(server, {
     },
 })
 
+subRedis.on("message", (channel, message) => {
+    io.to(channel).emit('room-update', message)
+})
+
+subRedis.on('error', (err) => {
+    console.error("Redis subscription error", err)
+})
+
 io.on("connection", async (socket) => {
     const { id } = socket
 

@@ -29,6 +29,12 @@ const ClientPage = ({topicName, initialData}: ClientPageProps) => {
         socket.emit('join-room', `room:${topicName}`)
     }, [])
 
+    useEffect(() => {
+        socket.on('room-update', (message: string) => {
+            console.log('room-update received:', message)
+        })
+    }, [])
+
     const fontScale = scaleLog({
         domain: [
             Math.min(...words.map((w) => w.value)), 
