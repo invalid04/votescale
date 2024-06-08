@@ -1,7 +1,7 @@
 import express from "express"
 import cors from "cors"
 import http from "http"
-import {Server} from "socket.io"
+import { Server } from "socket.io"
 
 const app = express()
 app.use(cors())
@@ -13,6 +13,14 @@ const io = new Server(server, {
         methods: ["GET", "POST"],
         credentials: true,
     },
+})
+
+io.on("connection", async (socket) => {
+    const { id } = socket
+
+    socket.on("join-room", async (room: string) => {
+        console.log('user joined room:', room)
+    })
 })
 
 const PORT = process.env.PORT || 8080
