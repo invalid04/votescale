@@ -42,6 +42,35 @@ io.on("connection", async (socket) => {
             })
         }
     })
+
+    socket.on('disconnect', async () => {
+        const { id } = socket
+
+        const joinedRooms = await redis.smembers(`rooms:${id}`)
+        await redis.del(`rooms:${id}`)
+
+        joinedRooms.forEach(async (room) => {
+            const remainingConnections = await redis.hincrby(
+                `room-connections`,
+                 room, 
+                 -1
+            )
+
+            if(remainingConnections <= 0) {
+                await redis.hdel(`room-connections`, room)
+
+                subRedis.unsubscribe(room, async (err) => {
+                    if(err) {
+                        console.error("Failed to unsubscribe", err)
+                    } else {
+                        await redis.srem("subscribed-rooms", room)
+
+                        console.log('Unsubscribed from room:', room)
+                    }
+                })
+            }
+        })
+    })
 })
 
 const PORT = process.env.PORT || 8080
